@@ -5,12 +5,12 @@
 * under the terms of "Eclipse Public License v1.0"
 * which accompanies this distribution, and is available
 * at the URL "http://www.eclipse.org/legal/epl-v10.html".
-*
+* SPDX-License-Identifier: EPL-2.0 (changed by the NeoSymbian Authors)
 * Initial Contributors:
 * Nokia Corporation - initial contribution.
 *
 * Contributors:
-*
+* The NeoSymbian Authors (2026): silent tones and sound files (no MMF DevSound; sound is neoui's).
 * Description:  EikSrv keysound server.
 *
 */
@@ -916,8 +916,7 @@ void CAknSynthSoundInfo::InitL()
         LOGTEXT(_L("CAknSynthSoundInfo::InitL(). Static init."));
 
         iPlayedStatically = ETrue;
-        iToneObserver = CAknEikAudioToneObserver::NewL(*this);
-        iTonePlayer = CMdaAudioToneUtility::NewL(*iToneObserver, NULL); // Synchronous
+        // NeoSymbian: no tone player (no MMF DevSound; sound is neoui's)
         }
     }
 
@@ -929,15 +928,7 @@ void CAknSynthSoundInfo::PlayL()
     // Stops playing and deletes instances if they exist.
     Stop();
 
-    if (!iPlayedStatically)
-        {
-        // Create new tone player and observer.
-        iToneObserver = CAknEikAudioToneObserver::NewL(*this);
-        iTonePlayer = CMdaAudioToneUtility::NewL(*iToneObserver, NULL); // Synchronous
-        }
-
-    // Prepare to play either a tone or a sequence depending on subclass.
-    Prepare();
+    // NeoSymbian: tones are silent (no MMF DevSound to play them; sound is neoui's)
     }
 
 void CAknSynthSoundInfo::DoPlay()
@@ -1146,8 +1137,7 @@ void CAknFileSoundInfo::PlayL()
     // Stops playing and deletes audio player instance if it exist.
     Stop();
 
-    // Create audio player. DoPlay() will be called in all circumstances.
-    iAudioPlayer = CMdaAudioPlayerUtility::NewFilePlayerL(iFileName, *this, iPriority,(TMdaPriorityPreference)iPreference );
+    // NeoSymbian: sound files are silent (no MMF to play them; sound is neoui's)
     LOGTEXT(_L(" CAknFileSoundInfo::PlayL() - Exit"));
     }
 
