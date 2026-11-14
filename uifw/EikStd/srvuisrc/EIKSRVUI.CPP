@@ -5,12 +5,12 @@
 * under the terms of "Eclipse Public License v1.0"
 * which accompanies this distribution, and is available
 * at the URL "http://www.eclipse.org/legal/epl-v10.html".
-*
+* SPDX-License-Identifier: EPL-2.0 (changed by the NeoSymbian Authors)
 * Initial Contributors:
 * Nokia Corporation - initial contribution.
 *
 * Contributors:
-*
+* The NeoSymbian Authors (2026): no comms server start (NeoSymbian has no C32).
 * Description:  
 *
 */
@@ -585,14 +585,8 @@ EXPORT_C void CEikServAppUiBase::InitializeL(TEikServCtrlFactories& aCtrlFactori
 
     iVwsSession->EnableServerBlankScreen(EFalse);
     
-    // Start Comms
-    TInt err = StartC32();
-    if (err != KErrNone && err != KErrAlreadyExists)
-        {
-        User::Leave(err);
-        }
-    
-    err = User::LoadPhysicalDevice(COMMS_PDD_NAME);
+    // NeoSymbian: no comms server (C32) to start; serial and Bluetooth are services of their own
+    TInt err = User::LoadPhysicalDevice(COMMS_PDD_NAME);
     if (err != KErrNone && err != KErrAlreadyExists && err != KErrNotFound)
         {
         User::Leave(err);
