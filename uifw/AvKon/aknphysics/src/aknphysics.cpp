@@ -5,12 +5,12 @@
 * under the terms of "Eclipse Public License v1.0"
 * which accompanies this distribution, and is available
 * at the URL "http://www.eclipse.org/legal/epl-v10.html".
-*
+* SPDX-License-Identifier: EPL-2.0 (changed by the NeoSymbian Authors)
 * Initial Contributors:
 * Nokia Corporation - initial contribution.
 *
 * Contributors:
-*
+* The NeoSymbian Authors (2026): no physics engine when kinetic scrolling is off (ODE is not built).
 * Description:  CAknPhysics
 *
 */
@@ -378,7 +378,10 @@ EXPORT_C void CAknPhysics::InitPhysicsL( const TSize& aWorldSize,
         }
 
     StopPhysics();
-    iEngine->DeletePhysics();
+    if ( iEngine )
+        {
+        iEngine->DeletePhysics();
+        }
 
     iLandscape = aLandscape;
 
@@ -975,7 +978,11 @@ void CAknPhysics::ConstructL( CCoeControl* aViewControl )
     iPhysics = CAknHighResPeriodic::NewL(
         CActive::EPriorityStandard, nullThreadOpen ? &iNullThread : NULL );
     
-    iEngine = CAknPhysicsEngine::NewL( this );
+    // NeoSymbian: the engine is ODE, which is not built; without one, StartPhysics refuses (no kinetic scrolling)
+    if ( CAknPhysicsParameterProvider::FeatureEnabled() )
+        {
+        iEngine = CAknPhysicsEngine::NewL( this );
+        }
     iParamProvider = CAknPhysicsParameterProvider::NewL();
     iRestrictor = CAknPhysicsRestrictor::NewL( iParamProvider );
     iConeObserver = CAknPhysicsConeObserver::NewL( this, iRestrictor );
