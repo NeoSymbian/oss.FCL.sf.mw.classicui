@@ -617,7 +617,7 @@ EXPORT_C void CAknPhysics::RegisterPanningPosition( const TPoint& aDelta )
             {
             iOngoingAction = EAknPhysicsActionDragging;
             
-            if ( iParamProvider->FpsLoggingEnabled() )
+            if ( iEngine && iParamProvider->FpsLoggingEnabled() )
                 {
                 iEngine->StartFpsLogging();
                 }

@@ -5,12 +5,12 @@
 * under the terms of "Eclipse Public License v1.0"
 * which accompanies this distribution, and is available
 * at the URL "http://www.eclipse.org/legal/epl-v10.html".
-*
+* SPDX-License-Identifier: EPL-2.0 (changed by the NeoSymbian Authors)
 * Initial Contributors:
 * Nokia Corporation - initial contribution.
 *
 * Contributors:
-*
+* The NeoSymbian Authors (2026): no ALF distraction window (no ALF on NeoSymbian).
 * Description:  Screen clearer.
 *
 */
@@ -135,9 +135,7 @@ EXPORT_C void CAknScreenClearerBase::ConstructL(RWindowGroup& aParent, TInt aOrd
 		EnableWindowTransparency();
 		}
 
-    CAlfEffectObserver* alfEffectObserver = CAlfEffectObserver::NewL(); 
-    alfEffectObserver->SetDistractionWindow(*DrawableWindow());
-    delete alfEffectObserver;
+    // NeoSymbian: no ALF effects server to tell about this window (neoui composes the screen)
 
 	iFlags.Assign(EAknScreenClearerBlankAppStatusPane, aBlankAppStatusPane);
 

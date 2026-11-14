@@ -10,7 +10,7 @@
 * Nokia Corporation - initial contribution.
 *
 * Contributors:
-* The NeoSymbian Authors (2026): no comms server start (NeoSymbian has no C32).
+* The NeoSymbian Authors (2026): no comms server or alarm server start (NeoSymbian has neither).
 * Description:  
 *
 */
@@ -618,12 +618,8 @@ EXPORT_C void CEikServAppUiBase::InitializeL(TEikServCtrlFactories& aCtrlFactori
 
 EXPORT_C void CEikServAppUiBase::HandleThreadExitL(RThread& aThread)
     {
-    if (aThread.Name() == ASCliDefinitions::ServerAndThreadName()) // alarm server died
-        {
-        aThread.Close(); // need to Close() before restarting with same name
-        iServerToRestart |= EAlwlSvr; // restarted under active object
-        }
-    else if (aThread.Name()==NameApaServServerThread()) // AppArc server died
+    // NeoSymbian: no alarm server to watch (alarms are neoui's)
+    if (aThread.Name()==NameApaServServerThread()) // AppArc server died
         {
         aThread.Close();
         iServerToRestart|=EApaSvr;
@@ -661,16 +657,6 @@ TInt CEikServAppUiBase::StartNotifierServerCallBackL(TAny* aPtr)
 // Kick dead servers back to life, if we can connect then stop kicking.
 void CEikServAppUiBase::RestartServer()
     {
-    if (iServerToRestart & EAlwlSvr)
-        {
-        // Start AlarmServer
-        TInt err = AlarmClientUtils::StartAlarmServer();
-        if (err == KErrNone)
-            {
-            iServerToRestart&=(~EAlwlSvr);
-            }
-        }
-        
     if (iServerToRestart&EApaSvr)
         {
         AknStartupApaServerProcess();
@@ -1962,13 +1948,7 @@ void CEikServAppUi::DoAlarmServerStartupL()
     // Stupid naming, perhaps.
     iAlarmAlertServer = CEikServAlarmAlertServer::NewL(this);
 
-    // Start AlarmServer.
-    TInt err = AlarmClientUtils::StartAlarmServer();
-    if (err != KErrNone && err != KErrAlreadyExists)
-        {
-        User::Leave(err);
-        }
-
+    // NeoSymbian: no alarm server to start (alarms are neoui's)
     HandleSwitchOnEventL( NULL );    
     }
 
