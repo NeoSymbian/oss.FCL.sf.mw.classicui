@@ -5,12 +5,12 @@
 * under the terms of "Eclipse Public License v1.0"
 * which accompanies this distribution, and is available
 * at the URL "http://www.eclipse.org/legal/epl-v10.html".
-*
+* SPDX-License-Identifier: EPL-2.0 (changed by the NeoSymbian Authors)
 * Initial Contributors:
 * Nokia Corporation - initial contribution.
 *
 * Contributors:
-*
+* The NeoSymbian Authors (2026): no light client (the display light is neoui's).
 * Description:  Avkon keysound animation dll.
 *
 */
@@ -268,7 +268,7 @@ void CAknAnimKeySound::ConstructL( TAny* /*aArgs*/, TBool /*aHasFocus*/ )
     iExt = reinterpret_cast<MAnimGeneralFunctionsWindowExtension*>(iFunctions->ExtendedInterface(
         MAnimGeneralFunctions::EWindowExtensionInterface)); 
             
-    iLight = CHWRMLight::NewL();
+    // NeoSymbian: no light client (no HWRM server; the display light is neoui's): iLight stays NULL
     }
 
 // -----------------------------------------------------------------------------
