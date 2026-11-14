@@ -5,12 +5,12 @@
 * under the terms of "Eclipse Public License v1.0"
 * which accompanies this distribution, and is available
 * at the URL "http://www.eclipse.org/legal/epl-v10.html".
-*
+* SPDX-License-Identifier: EPL-2.0 (changed by the NeoSymbian Authors)
 * Initial Contributors:
 * Nokia Corporation - initial contribution.
 *
 * Contributors:
-*
+* The NeoSymbian Authors (2026): no ALF client (neoui composes the screen).
 * Description:  
 *
 */
@@ -275,7 +275,10 @@ private:
     RProperty iTelephonyIdleUidProperty;
     CPropertySubscriber* iTelephonyIdleUidSubscriber;
     TBool iIdleActive;
-    RAlfDirectClient iAlfClient;
+    // NeoSymbian: no ALF (the UI accelerator's compositor): neoui composes the screen. A do-nothing stand-in for
+    // its direct client, whose BlankScreen() was only ALF's screen blanking.
+    class TNoAlfClient { public: void BlankScreen(TBool) {} void Close() {} };
+    TNoAlfClient iAlfClient;
     CPeriodic* iRemoveBlankCallBack;   
     };
 

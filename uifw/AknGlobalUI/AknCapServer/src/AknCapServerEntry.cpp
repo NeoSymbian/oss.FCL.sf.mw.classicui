@@ -5,12 +5,12 @@
 * under the terms of "Eclipse Public License v1.0"
 * which accompanies this distribution, and is available
 * at the URL "http://www.eclipse.org/legal/epl-v10.html".
-*
+* SPDX-License-Identifier: EPL-2.0 (changed by the NeoSymbian Authors)
 * Initial Contributors:
 * Nokia Corporation - initial contribution.
 *
 * Contributors:
-*
+* The NeoSymbian Authors (2026): no OOM watcher thread or ALF start-up (neither runs on NeoSymbian).
 * Description:  
 *
 */
@@ -225,16 +225,14 @@ TInt StartOOM(TAny* aThis)
     me->iIdler = 0;
     
     // do the actual startup
-    TRAPD( err, CreateOOMWatcherThreadL());
-    // we panic here if something goes wrong as startup will fail anyway.
-    __ASSERT_ALWAYS(err==KErrNone, User::Invariant());
+    // NeoSymbian: no out-of-memory watcher thread (sysresmonitoring's OOM monitor is not built: neoui and the kernel
+    // manage memory)
+    TInt err = KErrNone;
 
     me->iEikSrv.AllowNotifierAppServersToLoad();
     me->iEikSrv.Close(); // currently there is no use to keep this session alive.
     
-#ifdef SYMBIAN_BUILD_GCE
-    TRAP(err, CAlfAsynchStartup::StartL());
-#endif     
+    // NeoSymbian: no ALF server to start (neoui composes the screen)
     
     return err;
     }
