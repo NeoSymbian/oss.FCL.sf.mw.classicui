@@ -5,12 +5,12 @@
 * under the terms of "Eclipse Public License v1.0"
 * which accompanies this distribution, and is available
 * at the URL "http://www.eclipse.org/legal/epl-v10.html".
-*
+* SPDX-License-Identifier: EPL-2.0 (changed by the NeoSymbian Authors)
 * Initial Contributors:
 * Nokia Corporation - initial contribution.
 *
 * Contributors:
-*
+* The NeoSymbian Authors (2026): no default FEP (AknFep is not built; apps get plain key events).
 * Description:
 *
 */
@@ -48,7 +48,7 @@ STRUCT FEP_DEFAULT_DATA
 
 RESOURCE FEP_DEFAULT_DATA r_eik_fep_default_data
 	{
-	filenameofdll="::101FD65A"; // Implementation UID of AknFep.dll
+	filenameofdll=""; // NeoSymbian: no FEP (was "::101FD65A", AknFep, not built: loading it failed every app)
 
 	onkeydata=FEP_ON_OR_OFF_KEY_DATA
 		{
